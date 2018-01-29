@@ -45,11 +45,15 @@ new Vue({
 	store,
 	template: '<app/>',
 
+	created: function () {
+        //console.log('$f7router', Vue.route);
+    },
+
 	framework7: {
 		root: '#app',
 		/* Uncomment to enable Material theme: */
 		// material: true,
-		routes: Routes,
+		routes: Routes
 	},
 
 	components: {

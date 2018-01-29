@@ -14,7 +14,7 @@ export default class User {
     }
 
     static requestUser() {
-        Vue.http.get(
+        /*Vue.http.get(
             //'https://next.json-generator.com/api/json/get/4ysuZuZSV', // '/api/v1/products', 
             '/api/v1/products/?limit=10&offset=0',
             {
@@ -33,7 +33,7 @@ export default class User {
             console.log(response.data)
         }, function(error){
             console.log('error',error)
-        })
+        })*/
 
         //AJAX 
         return  {

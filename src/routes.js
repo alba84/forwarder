@@ -1,19 +1,23 @@
 export default [
-    {
-        path: '/about/',
-        component: require('./pages/about.vue')
-    },
-    {
-        path: '/form/',
-        component: require('./pages/form.vue')
+    /*{
+        path: '/auth/',
+        component: require('./pages/bro-login.vue')
     },
     {
         path: '/order/',
-        component: require('./pages/order.vue')
+        component: require('./pages/bro-order.vue')
     },
     {
         path: '/order/:orderId/',
-        component: require('./pages/order.vue')
+        component: require('./pages/bro-order.vue')
+    },
+    {
+        path: '/about/',
+        component: require('./pages/about.vue')
+    },*/
+    {
+        path: '/form/',
+        component: require('./pages/form.vue')
     },
     {
         path: '/dynamic-route/blog/:blogId/post/:postId/',

@@ -2,51 +2,106 @@
 
 import Vue from 'vue'
 
+import store from '../store'
+
 var User = /** @class */ (function () {
-    function User(user_data) {
-        if (typeof user_data !== "object")
-            throw new Error('Ошибка инициализации данных пользователя');
-        this.data = user_data;
+    function User() {
+        /*if (typeof user_data !== "object")
+            throw new Error('Ошибка инициализации данных пользователя');*/
+
+        this.token = store.state.token
+        
+        this.user_id = store.state.user_id
+
+        this.getInfo()
     }
-    User.prototype.isAuthorized = function () {
-        return (typeof this.data.id === "number" && this.data.id > 0);
+
+    User.getStoredToken = function()
+    {
+        return store.state.token;
     };
-    User.requestUser = function (callback) {
-        /*Vue.http.get(
-            '/api/v1/products/?limit=10&offset=0',
-            {
-                params: {
-                    limit: 10,
-                    offset: 0
+
+    User.getStoredUserId = function()
+    {
+        return store.state.user_id*1;
+    };
+
+    User.isAuthorized = function () {
+        var user_id = User.getStoredUserId(),
+        token = User.getStoredToken()
+
+        return (typeof token == "string" && token.length>0 && typeof user_id === "number" && user_id > 0);
+    };
+
+    /**
+     * 
+     * @param {*} context 
+     * @param {*} email 
+     * @param {*} pass 
+     * @param {*} callback 
+     */
+    User.authorize = function(context, email, pass, callback){
+        var self = this
+
+        if(typeof email == "string" && email.length > 0 && typeof pass == "string" && pass.length > 0)
+        {
+            Vue.http.post(
+                '/api/forwarder/auth/signIn/',
+                {
+                    email: email, 
+                    password: pass
                 },
-                headers: process.env.api.request_headers,
-            }
-        )
-        .then(function(response){
+                {
+                    headers: User.getHeaders(),
+                }
+            )
+            .then(function(response){
 
-            let user_data = { //response.data
-                id: 2160,
-                name: 'Альберт',
-                second_name: 'Абдрахимов',
-                groups: [1, 2, 24]
-            }
+                // Запомниаем токен и айдишник пользователя
+                Vue.localStorage.set('user_token', response.data.token)
+                Vue.localStorage.set('user_id', response.data.id)
 
-            let user = new User(user_data)
+                // Дергаем колбек для передачи данных в компонент вызвавший авторизацию
+                callback.call(context, response.data)
 
-            callback.call(Vue.$store, user);
-            
+            }, function(error){
+                console.log('User.js: authorize() error', error)
+            })
+        }
+    };
 
-        }, function(error){
-            console.log('error',error)
-        })*/
+    User.getHeaders = function () {
+        var headers = process.env.api.request_headers,
+            token = User.getStoredToken()
 
-        //AJAX 
-        return {
-            id: 2160,
-            name: 'Альберт',
-            second_name: 'Абдрахимов',
-            groups: [1, 2, 24]
-        };
+        if(token.length >0 )
+           headers['App-Authorization'] = token
+
+        return headers
+    };
+
+    User.prototype.getInfo = function () {
+        var self = this,
+            user_id = User.getStoredUserId()
+
+        if(!(typeof self.data == "object" && typeof self.data.id == "number" && self.data.id == user_id && typeof self.data.token == "string" && self.data.token.length > 0 ))
+        {
+            Vue.http.get(
+                '/api/forwarder/users/'+user_id+'/',
+                {
+                    params: {},
+                    headers: User.getHeaders(),
+                }
+            )
+            .then(function(response){
+
+                self.data = response.data 
+                //console.log(self.data)
+
+            }, function(error){
+                console.log('User.js: getInfo() error', error)
+            })
+        }
     };
     return User;
 }());
