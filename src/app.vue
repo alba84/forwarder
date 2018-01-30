@@ -97,6 +97,7 @@ import Vue from 'vue'
 import User from './class/user'
 
 import BroLogin from './pages/bro-login'
+
 import BroOrder from './pages/bro-order'
 
 export default {

@@ -9,9 +9,9 @@ var User = /** @class */ (function () {
         /*if (typeof user_data !== "object")
             throw new Error('Ошибка инициализации данных пользователя');*/
 
-        this.token = store.state.token
+        this.token = User.getStoredToken()
         
-        this.user_id = store.state.user_id
+        this.user_id = User.getStoredUserId()
 
         this.getInfo()
     }
@@ -28,7 +28,7 @@ var User = /** @class */ (function () {
 
     User.isAuthorized = function () {
         var user_id = User.getStoredUserId(),
-        token = User.getStoredToken()
+            token = User.getStoredToken()
 
         return (typeof token == "string" && token.length>0 && typeof user_id === "number" && user_id > 0);
     };

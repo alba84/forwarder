@@ -30,15 +30,14 @@ export default {
         return {
             has_error: false,
             error: "",
-            login: "a.abdrakhimov@freshbroccoli.ru",
-            password: "123qwe!@#QWE",
+            login: "",
+            password: "",
         };
     },
     methods: {
         onSubmit: function(event) {
             User.authorize(this, this.login, this.password, function(response){
                 this.$store.dispatch('init')
-                console.log('call!!!', response);
             })
         }
     }

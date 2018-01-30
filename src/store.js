@@ -44,12 +44,7 @@ export default {
             commit('SET_CURRENT_USER', user)
         },
 
-        setCurrentOrder({commit}, order_id) {
-            // AJAX
-            let order = {
-                id: order_id,
-                name: 'Заказ №' + order_id
-            }
+        setCurrentOrder({commit}, order) {
             commit('SET_CURRENT_ORDER', order)
         }
     },
