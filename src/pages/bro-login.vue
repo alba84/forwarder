@@ -36,7 +36,7 @@ export default {
     },
     methods: {
         onSubmit: function(event) {
-            User.authorize(this, this.login, this.password, function(response){
+            User.authorize(this.login, this.password, this, function(response){
                 this.$store.dispatch('init')
             })
         }

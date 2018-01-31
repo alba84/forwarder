@@ -40,7 +40,7 @@ var User = /** @class */ (function () {
      * @param {*} pass 
      * @param {*} callback 
      */
-    User.authorize = function(context, email, pass, callback){
+    User.authorize = function(email, pass, context, callback){
         var self = this
 
         if(typeof email == "string" && email.length > 0 && typeof pass == "string" && pass.length > 0)
