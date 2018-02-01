@@ -29,11 +29,21 @@
                 <f7-list-item :title="'Заказ №' + order.data.id +' от ' + order.formatDate('dateCreate')" group-title></f7-list-item>
                 <f7-list-item title="Статус">{{order.get('orderStatus')}}</f7-list-item>
                 <f7-list-item title="Отменен"><f7-icon v-if="order.get('isCanceled')" f7="close"> да</f7-icon><f7-icon v-else f7="check"> нет</f7-icon></f7-list-item>
-                <f7-list-item title="Оплачен"><f7-icon v-if="order.get('paymentStatus')" f7="check"> да</f7-icon><f7-icon v-else f7="close"> нет</f7-icon></f7-list-item>
+                <f7-list-item title="Оплачен"><f7-icon v-if="order.get('isPaid')" f7="check"> да</f7-icon><f7-icon v-else f7="close"> нет</f7-icon></f7-list-item>
                 <f7-list-item title="Цена корзины">{{order.get('cartTotalFormated')}}</f7-list-item>
                 <f7-list-item title="Доставка">{{order.get('deliveryTotalFormated')}}</f7-list-item>
                 <f7-list-item title="Скидка">{{order.get('discountTotalFormated')}}</f7-list-item>
                 <f7-list-item title="Итого">{{order.get('totalFormated')}}</f7-list-item>
+
+                <f7-list-item :title="'Заказчик ' + order.data.client.name" group-title></f7-list-item>
+                <f7-list-item title="Телефон">{{order.data.client.phone}}</f7-list-item>
+
+                <f7-list-item :title="'Данные доставки'" group-title></f7-list-item>
+                <f7-list-item title="Дата">{{order.data.delivery.deliveryDate}}</f7-list-item>
+                <f7-list-item title="Время">{{order.data.delivery.deliveryTime}}</f7-list-item>
+                <f7-list-item title="Зона">{{order.data.delivery.deliveryZone}}</f7-list-item>
+                <f7-list-item title="Адрес">{{order.data.delivery.address}}</f7-list-item>
+                <f7-list-item title="Координаты">{{order.data.delivery.coords.lon}}, {{order.data.delivery.coords.lat}}</f7-list-item>
             </f7-list-group>
         </f7-list>
     </f7-page>
