@@ -3,12 +3,15 @@ import Vue from 'vue'
 import User from './class/user'
 //import Order from './class/order'
 
+import OrderStatusCollection from './class/orderStatusCollection'
+
 export default {
     state: {
         token: '',
         user_id: 0,
         user: null,
-        order: null
+        order: null,
+        order_status: null
     },
     
     actions: {
@@ -30,6 +33,11 @@ export default {
 
                 commit('SET_CURRENT_USER', user)
             }
+
+            OrderStatusCollection.load(this, function(order_statuses){
+
+                commit('SET_STATUS_COLLECTION', order_statuses)
+            })
         },
 
         setToken({commit}, token) {
@@ -46,6 +54,10 @@ export default {
 
         setCurrentOrder({commit}, order) {
             commit('SET_CURRENT_ORDER', order)
+        },
+
+        setStatusCollection({commit}, order_statuses) {
+            commit('SET_STATUS_COLLECTION', order_statuses)
         }
     },
     
@@ -61,6 +73,9 @@ export default {
         },
         SET_CURRENT_ORDER(state, order) {
             state.order = order
+        },
+        SET_STATUS_COLLECTION(state, status_collection) {
+            state.order_status = status_collection
         }
     },
 
@@ -76,7 +91,12 @@ export default {
         },
         order(state) {
             return state.order
+        },
+
+        order_status(state) {
+            return state.order_status
         }
+
     },  
     modules: {}
 }
